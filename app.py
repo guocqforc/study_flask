@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask import request
 from flask import make_response
 from flask import abort
@@ -11,15 +11,12 @@ manager = Manager(app)
 
 @app.route('/')
 def hello_world():
-    return 'hello wordl~'
+    return render_template('index.html')
 
 
 @app.route('/name/<name>')
 def user(name):
-    # user_agent = request.headers.get('User-Agent')
-    request = make_response('xxx')
-    request.set_cookie('answer', '24')
-    return 'hello %s usr-agent ;request_headers %s' % (name,request.headers)
+    return render_template('user.html',name=name)
 
 
 @app.route('/ab')
