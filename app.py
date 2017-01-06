@@ -2,8 +2,11 @@ from flask import Flask
 from flask import request
 from flask import make_response
 from flask import abort
+from flask.ext.script import Manager
 
 app = Flask(__name__)
+app.debug = True
+manager = Manager(app)
 
 
 @app.route('/')
@@ -24,4 +27,4 @@ def get_user():
     abort(404)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    manager.run()
