@@ -27,5 +27,9 @@ def get_user():
 def render_li():
     return render_template('macro_tmp.html',list=['abc','def','gkl'])
 
+@app.route('/base')
+def base():
+    return render_template('super_base.html')
+
 if __name__ == '__main__':
     manager.run()
