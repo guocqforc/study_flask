@@ -25,13 +25,21 @@ def user(name):
 def get_user():
     abort(404)
 
+
 @app.route('/li')
 def render_li():
-    return render_template('macro_tmp.html',list=['abc','def','gkl'])
+    return render_template('macro_tmp.html', list=['abc', 'def', 'gkl'])
+
 
 @app.route('/base')
 def base():
     return render_template('super_base.html')
+
+
+@app.errorhandler(404)
+def page_not_find(e):
+    return render_template('404.html'), 404
+
 
 if __name__ == '__main__':
     manager.run()
