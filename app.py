@@ -3,9 +3,11 @@ from flask import request
 from flask import make_response
 from flask import abort
 from flask.ext.script import Manager
+from flask.ext.bootstrap import Bootstrap
 
 app = Flask(__name__)
 app.debug = True
+bootstrap = Bootstrap(app)
 manager = Manager(app)
 
 

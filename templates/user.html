@@ -1,10 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>hi~,{{name }}!</h1>
-</body>
-</html>
+{% extends "bootstrap/base.html" %}
+{% block title %} flask {% endblock %}
+
+{% block navbar %}
+<div class="container">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle"
+                data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">flask</a>
+    </div>
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            <li><a href="/">home</a> </li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+     <div class="page-header">
+        <h1>hello,{{ name }}</h1>
+     </div>
+    </div>
+{% endblock %}
