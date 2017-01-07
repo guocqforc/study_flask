@@ -23,5 +23,9 @@ def user(name):
 def get_user():
     abort(404)
 
+@app.route('/li')
+def render_li():
+    return render_template('macro_tmp.html',list=['abc','def','gkl'])
+
 if __name__ == '__main__':
     manager.run()
