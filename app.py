@@ -18,7 +18,7 @@ def hello_world():
 
 @app.route('/name/<name>')
 def user(name):
-    return render_template('user.html',name=name)
+    return render_template('user.html', name=name)
 
 
 @app.route('/ab')
