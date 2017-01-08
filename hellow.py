@@ -8,6 +8,7 @@ from flask.ext.moment import Moment
 from flask.ext.wtf import Form
 from wtforms import StringField, SubmitField
 from wtforms.validators import Required, DataRequired
+from flask import session, redirect, url_for
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hard to guess string'
@@ -40,12 +41,11 @@ def index():
     name = None
     form = NameForm()
     if form.validate_on_submit():
-        print 'is submit'
         name = form.name.data
         form.name.data = ''
-        print 'is submit'
-
-    return render_template('user.html', name=name,
+        session['name'] = name
+        return redirect(url_for('index'))
+    return render_template('user.html', name=session.get('name'),
                            current_now=datetime.datetime.utcnow(), form=form)
 
 
