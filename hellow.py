@@ -9,6 +9,7 @@ from flask.ext.wtf import Form
 from wtforms import StringField, SubmitField
 from wtforms.validators import Required, DataRequired
 from flask import session, redirect, url_for
+from flask import flash
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hard to guess string'
@@ -43,7 +44,10 @@ def index():
     if form.validate_on_submit():
         name = form.name.data
         form.name.data = ''
+        if session.get('name') and session.get('name') != name:
+            flash('you change your name')
         session['name'] = name
+
         return redirect(url_for('index'))
     return render_template('user.html', name=session.get('name'),
                            current_now=datetime.datetime.utcnow(), form=form)
