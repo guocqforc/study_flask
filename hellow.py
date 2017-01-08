@@ -1,3 +1,4 @@
+# coding:utf-8
 from flask import Flask, render_template
 from flask import request
 from flask import make_response
@@ -10,13 +11,24 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import Required, DataRequired
 from flask import session, redirect, url_for
 from flask import flash
+import os
+
+from flask.ext.sqlalchemy import SQLAlchemy
+basedir = os.path.abspath(os.path.dirname(__file__))
+
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir,'data.sqlite')
+app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
+# 这个是可选这的 如果你要用到 sqlalchemy的系统事件 可以选着打开
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'hard to guess string'
+
 app.debug = True
 bootstrap = Bootstrap(app)
 manager = Manager(app)
 moment = Moment(app)
+db = SQLAlchemy(app)
 
 
 class NameForm(Form):
