@@ -1,4 +1,10 @@
 {% extends "bootstrap/base.html" %}
+{% block head %}
+    {{ super() }}
+    <link rel="icon" href="{{ url_for('static',filename = 'img/lol.png') }}" type="image/x-icon">
+
+{% endblock %}
+
 {% block title %} flask {% endblock %}
 
 {% block navbar %}
