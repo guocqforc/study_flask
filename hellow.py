@@ -4,11 +4,13 @@ from flask import make_response
 from flask import abort
 from flask.ext.script import Manager
 from flask.ext.bootstrap import Bootstrap
+from flask.ext.moment import Moment
 
 app = Flask(__name__)
 app.debug = True
 bootstrap = Bootstrap(app)
 manager = Manager(app)
+moment = Moment(app)
 
 
 @app.route('/')
@@ -18,7 +20,9 @@ def hello_world():
 
 @app.route('/name/<name>')
 def user(name):
-    return render_template('user.html', name=name)
+    import datetime
+    print datetime.datetime.utcnow()
+    return render_template('user.html', name=name, current_now=datetime.datetime.utcnow())
 
 
 @app.route('/ab')
