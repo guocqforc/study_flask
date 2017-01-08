@@ -4,7 +4,8 @@
         <h1> {{ name }}</h1>
     </div>
     <div>
-    <p>the current time {{ moment(current_now).format('LLL') }}</p>
+
+    <p>the current time {{ moment(current_now).format('YYYY-MM-DD HH:mm') }}</p>
     <P>that was {{ moment(current_now).fromNow(refresh=True) }}</P>
     </div>
 {% endblock %}
