@@ -4,7 +4,11 @@
         <h1> {{ name }}</h1>
     </div>
     <div>
-
+    <form method="post">
+        {{ form.hidden_tag() }}
+        {{ form.name.label }}{{ form.name(id='my_name') }}
+        {{ form.submit() }}
+    </form>
     <p>the current time {{ moment(current_now).format('YYYY-MM-DD HH:mm') }}</p>
     <P>that was {{ moment(current_now).fromNow(refresh=True) }}</P>
     </div>

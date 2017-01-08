@@ -5,12 +5,21 @@ from flask import abort
 from flask.ext.script import Manager
 from flask.ext.bootstrap import Bootstrap
 from flask.ext.moment import Moment
+from flask.ext.wtf import Form
+from wtforms import StringField, SubmitField
+from wtforms.validators import Required
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'hard to guess string'
 app.debug = True
 bootstrap = Bootstrap(app)
 manager = Manager(app)
 moment = Moment(app)
+
+
+class NameForm(Form):
+    name = StringField('what is you name?', validators=[Required])
+    submit = SubmitField('Submit')
 
 
 @app.route('/')
@@ -22,7 +31,7 @@ def hello_world():
 def user(name):
     import datetime
     print datetime.datetime.utcnow()
-    return render_template('user.html', name=name, current_now=datetime.datetime.utcnow())
+    return render_template('user.html', name=name, current_now=datetime.datetime.utcnow(),form=NameForm())
 
 
 @app.route('/ab')
