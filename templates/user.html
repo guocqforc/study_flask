@@ -9,6 +9,13 @@
         {{ form.name.label }}{{ form.name(id='my_name') }}
         {{ form.submit() }}
     </form>
+    <br/>
+    <br/>
+    <div>
+        {% import 'bootstrap/wtf.html' as wtf %}
+        {{ wtf.quick_form(form) }}
+    </div>
+    <br/>
     <p>the current time {{ moment(current_now).format('YYYY-MM-DD HH:mm') }}</p>
     <P>that was {{ moment(current_now).fromNow(refresh=True) }}</P>
     </div>
