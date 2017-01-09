@@ -51,16 +51,24 @@ def user(name):
 @app.route('/post', methods=['GET', 'POST'])
 def index():
     import datetime
+    from model import User
     name = None
     form = NameForm()
     if form.validate_on_submit():
         name = form.name.data
         form.name.data = ''
-        if session.get('name') and session.get('name') != name:
-            flash('you change your name')
-        session['name'] = name
-
+        if name:
+            user = User.query.filter_by(username=name).first()
+            if user is None:
+                db.session.add(User(username=name))
+                db.session.commit()
+                flash('yo~~')
+                flash('new user %s'%name)
+            else:
+                flash('old friend!')
+            session['name'] = name
         return redirect(url_for('index'))
+
     return render_template('user.html', name=session.get('name'),
                            current_now=datetime.datetime.utcnow(), form=form)
 

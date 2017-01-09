@@ -7,7 +7,7 @@ class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
-    users = db.relationship('User', backref='role')  # 在User 表中创建了role 属性 在User表中访问role
+    users = db.relationship('User', backref='role',lazy='dynamic')  # 在User 表中创建了role 属性 在User表中访问role
                                                      # 就是访问 相关联的Role对象的列表
     def __repr__(self):
         return '<Roles %r>' % self.name
