@@ -7,7 +7,8 @@ class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
-
+    users = db.relationship('User', backref='role')  # 在User 表中创建了role 属性 在User表中访问role
+                                                     # 就是访问 相关联的Role对象的列表
     def __repr__(self):
         return '<Roles %r>' % self.name
 
@@ -16,6 +17,7 @@ class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True, index=True)  # index 这里创建了一个索引
+    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))  # 和roles表中的id进行了外界关联
 
     def __repr__(self):
         return '<Users %r>' % self.username
