@@ -11,6 +11,7 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import Required, DataRequired
 from flask import session, redirect, url_for
 from flask import flash
+from flask.ext.migrate import Migrate, MigrateCommand
 
 
 import os
@@ -31,6 +32,9 @@ bootstrap = Bootstrap(app)
 manager = Manager(app)
 moment = Moment(app)
 db = SQLAlchemy(app)
+
+migrate = Migrate(app, db)
+manager.add_command('db', MigrateCommand)
 
 
 def make_shell_context():
