@@ -18,6 +18,6 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True, index=True)  # index 这里创建了一个索引
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))  # 和roles表中的id进行了外界关联
-
+    
     def __repr__(self):
         return '<Users %r>' % self.username
