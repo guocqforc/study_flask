@@ -3,7 +3,7 @@ from flask import Flask, render_template
 from flask import request
 from flask import make_response
 from flask import abort
-from flask.ext.script import Manager
+from flask.ext.script import Manager, Shell
 from flask.ext.bootstrap import Bootstrap
 from flask.ext.moment import Moment
 from flask.ext.wtf import Form
@@ -11,6 +11,8 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import Required, DataRequired
 from flask import session, redirect, url_for
 from flask import flash
+
+
 import os
 
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -29,6 +31,18 @@ bootstrap = Bootstrap(app)
 manager = Manager(app)
 moment = Moment(app)
 db = SQLAlchemy(app)
+
+
+def make_shell_context():
+    """
+    为shell命令添加环境的上下文
+    :return:
+    """
+    from model import User, Role
+    return dict(app=app, db=db, User=User, Role=Role)
+
+
+manager.add_command('shell', Shell(make_context=make_shell_context))
 
 
 class NameForm(Form):
