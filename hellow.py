@@ -37,7 +37,7 @@ app.config['MAIL_PASSWORD'] = os.environ.get('mail_pswd')
 
 # 定义邮件发送的前缀
 app.config['FLASKY_MAIL_SUBJECT_PREFIX'] = '[Flasky]'
-app.config['FLASKY_MAIL_SENDER'] = 'Flasy_amin'
+app.config['FLASKY_MAIL_SENDER'] = os.environ.get('mail_name')
 mail = Mail(app)
 
 
@@ -111,8 +111,10 @@ def index():
             if user is None:
                 db.session.add(User(username=name))
                 db.session.commit()
-                flash('yo~~')
+                flash('yo~~send email')
                 flash('new user %s'%name)
+                send_mail(os.environ.get('to_mail_name'), 'index_function new user', 'mail/new_user', name=name,
+                          date_time=datetime.datetime.now())
             else:
                 flash('old friend!')
             session['name'] = name
