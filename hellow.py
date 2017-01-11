@@ -35,6 +35,9 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = os.environ.get('mail_name')
 app.config['MAIL_PASSWORD'] = os.environ.get('mail_pswd')
 
+# 定义邮件发送的前缀
+app.config['FLASKY_MAIL_SUBJECT_PREFIX'] = '[Flasky]'
+app.config['FLASKY_MAIL_SENDER'] = 'Flasy_amin'
 mail = Mail(app)
 
 
@@ -46,6 +49,23 @@ db = SQLAlchemy(app)
 
 migrate = Migrate(app, db)
 manager.add_command('db', MigrateCommand)
+
+
+def send_mail(to, subject, template, **kwargs):
+    """
+    指定模板时候 不要指定拓展名
+    :param to:
+    :param subject:
+    :param template:
+    :param kwargs:
+    :return:
+    """
+    msg = Message(app.config['FLASKY_MAIL_SUBJECT_PREFIX'] + subject,
+                  sender=app.config['FLASKY_MAIL_SENDER'],
+                  recipients=[to])
+    msg.body = render_template(template + '.txt', **kwargs)
+    msg.html = render_template(template + '.html', **kwargs)
+    mail.send(msg)
 
 
 def make_shell_context():
