@@ -1,0 +1,14 @@
+一开始发送邮件的时候 发现 报个错
+
+  File "D:\software\python2.7.8\lib\smtplib.py", line 724, in sendmail
+    raise SMTPSenderRefused(code, resp, from_addr)
+SMTPSenderRefused: (553, '2f0f5875e0e1102-17d50 SMTP only, outside user is not allowed on this machine', u'xx@163.com')
+
+解决：
+首先检查一下发送邮件的邮箱配置： 有没有开启smtp 授权。
+然后检查一下 用户密码啥的
+最后检查 代码
+发现：
+msg = Message('test subject',sender='xx@139.com',recipients=['xx@163.com']);
+这个写错了 2个写成一样的了
+找到之后 搞定。

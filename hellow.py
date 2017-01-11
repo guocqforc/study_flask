@@ -13,6 +13,7 @@ from flask import session, redirect, url_for
 from flask import flash
 from flask.ext.migrate import Migrate, MigrateCommand
 
+from flask.ext.mail import Mail,Message
 
 import os
 
@@ -26,6 +27,16 @@ app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 # 这个是可选这的 如果你要用到 sqlalchemy的系统事件 可以选着打开
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'hard to guess string'
+
+#配置邮箱信息
+app.config['MAIL_SERVER'] = 'smtp.139.com'
+app.config['MAIL_PORT'] = 25
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = os.environ.get('mail_name')
+app.config['MAIL_PASSWORD'] = os.environ.get('mail_pswd')
+
+mail = Mail(app)
+
 
 app.debug = True
 bootstrap = Bootstrap(app)
