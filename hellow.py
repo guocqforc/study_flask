@@ -14,6 +14,7 @@ from flask import flash
 from flask.ext.migrate import Migrate, MigrateCommand
 
 from flask.ext.mail import Mail,Message
+from threading import Thread
 
 import os
 
@@ -51,6 +52,11 @@ migrate = Migrate(app, db)
 manager.add_command('db', MigrateCommand)
 
 
+def send_async_mail(app, msg):
+    with app.app_context():
+        mail.send(msg)
+
+
 def send_mail(to, subject, template, **kwargs):
     """
     指定模板时候 不要指定拓展名
@@ -65,8 +71,11 @@ def send_mail(to, subject, template, **kwargs):
                   recipients=[to])
     msg.body = render_template(template + '.txt', **kwargs)
     msg.html = render_template(template + '.html', **kwargs)
-    mail.send(msg)
-
+    # mail.send(msg)
+    # 修改为异步发送邮件
+    thr = Thread(target=send_async_mail, args=[app, msg])
+    thr.start()
+    return thr
 
 def make_shell_context():
     """
