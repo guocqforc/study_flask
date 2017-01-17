@@ -22,4 +22,6 @@ def create_app(config_name):
     db.init_app(app)
 
     # 附加路由 和自定义错误页
+    from .main import main as main_blueprint
+    app.register_blueprint(main_blueprint)
     return app

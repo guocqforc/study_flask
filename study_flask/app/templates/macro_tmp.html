@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% import 'macro.html' as macros %}
+{% for item in list %}
+  {{ macros.render_comment(item) }}
+ {% endfor %}
+</body>
+</html>
