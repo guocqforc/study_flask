@@ -1,4 +1,4 @@
-# codig utf-8
+# coding:utf-8
 
 import os
 from app import create_app, db
@@ -18,6 +18,17 @@ def make_shell_content():
 
 manager.add_command("shell", Shell(make_context=make_shell_content))
 manager.add_command("db", MigrateCommand)
+
+@manager.command
+def test():
+    """
+    Run the unit tests
+    :return:
+    """
+    import unittest
+    tests = unittest.TestLoader().discover('tests') # 后面那个是测试文件所在的文件夹名字
+    unittest.TextTestResult(verbosity=2).run(tests)
+
 
 if __name__ == '__main__':
     manager.run()
