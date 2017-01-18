@@ -39,7 +39,7 @@ def index():
             else:
                 flash('old friend!')
             session['name'] = name
-        return redirect(url_for('index'))
+        return redirect(url_for('.index'))
 
     return render_template('user.html', name=session.get('name'),
                            current_now=datetime.datetime.utcnow(), form=form)

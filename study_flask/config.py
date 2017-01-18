@@ -22,8 +22,10 @@ class DevelopmentConfig(Config):
     MAIL_USENAME = os.environ.get('mail_name')
     MAIL_PASSWORD = os.environ.get('mail_pswd')
 
-    SQLACHEMY_DATABASE_URL = os.environ.get('DEV_DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir,'data-dev.sqlite')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
+                             'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite')
+
+    print SQLALCHEMY_DATABASE_URI
 
 
 class TestingConfig(Config):
