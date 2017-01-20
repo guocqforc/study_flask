@@ -7,4 +7,3 @@ class LoginForm(Form):
     password = PasswordField('password',validators=[Required()])
     remember_me = BooleanField('keep me logged in')
     submit = SubmitField('Log in')
-    
