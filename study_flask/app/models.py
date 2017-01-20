@@ -1,8 +1,10 @@
 # coding:utf-8
 from . import db
+from flask.ext.login import UserMixin
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
+from . import login_manager
 
 class Role(db.Model):
     # 这个是定义在数据库中使用的表名
@@ -16,10 +18,11 @@ class Role(db.Model):
         return '<Roles %r>' % self.name
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True, index=True)  # index 这里创建了一个索引
+    email = db.Column(db.String(64),unique=True,index=True)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))  # 和roles表中的id进行了外界关联
     password_hash = db.Column(db.String(128))
 
@@ -38,3 +41,8 @@ class User(db.Model):
 
     def __repr__(self):
         return '<Users %r>' % self.username
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
